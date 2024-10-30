@@ -1,8 +1,26 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Header from "./Header";
+import checkValidData from "../Utils/validate";
 
 const Login = () => {
   const [signInForm, setSignInForm] = useState(true);
+  const [errorMessage,setErrorMessage]=useState(null);
+  const name=useRef(null)
+  const email = useRef(null);
+  const password = useRef(null);
+
+  const handleButtonClick = () => {
+    //validate the form data
+
+    // console.log(email.current.value);
+    // console.log(password.current.value);
+
+    const message = checkValidData(email.current.value, password.current.value,name.current.value);
+    setErrorMessage(message)
+    // console.log(message);
+
+    //sign in  / signup 
+  };
 
   const toggleSignInForm = () => {
     setSignInForm(!signInForm);
@@ -16,29 +34,39 @@ const Login = () => {
           alt="logo"
         />
       </div>
-      <form className="w-3/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-80">
+      <form
+        onSubmit={(e) => e.preventDefault()}
+        className="w-3/12 absolute p-12 bg-black my-36 mx-auto right-0 left-0 text-white rounded-lg bg-opacity-80"
+      >
         <h1 className="font-bold text-3xl py-4">
           {signInForm ? "Sign In" : "Sign up"}
         </h1>
         {!signInForm && (
           <input
+          ref={name}
             type="test"
             placeholder="Full Name"
             className="p-4 my-4 w-full bg-gray-700"
           />
         )}
         <input
+          ref={email}
           type="text"
           placeholder="Email Address"
           className="p-4 my-4 w-full bg-gray-700"
         />
 
         <input
+          ref={password}
           type="password"
           placeholder="Password"
           className="p-4 my-4 w-full bg-gray-700"
         />
-        <button className=" bg-red-700 p-4 my-6 w-full">
+        <p className="text-red-500 text-lg py-2">{errorMessage}</p>
+        <button
+          className=" bg-red-700 p-4 my-6 w-full"
+          onClick={handleButtonClick}
+        >
           {signInForm ? "Sign In" : "Sign up"}
         </button>
         <p
