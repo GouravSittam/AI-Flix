@@ -21,8 +21,6 @@ const Login = () => {
     // console.log(email.current.value);
     // console.log(password.current.value);
     // console.log(nameValue);
-
-
     //sign in  / signup
   };
 
